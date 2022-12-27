@@ -14,4 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// TODO: Implement Routes
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('post/{slug?}', function () {
+})->where('slug', '[A-Za-z0-9\-]+');
+
+Route::get('year/{year}', function () {
+})->where('year', '^(13[0-9]\d|14[0-9]\d)$');
+
+Route::get('admin/dashboard', function () {
+})->middleware('admin');
+
+Route::resource('admin/users', UserController::class)->middleware('admin');
+
+Route::fallback(function() {
+    return response()->view('errors.404', [], 404);
+});
